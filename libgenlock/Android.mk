@@ -10,6 +10,9 @@ LOCAL_CFLAGS                  := $(common_flags) -DLOG_TAG=\"libgenlock\"
 ifneq ($(TARGET_BOARD_PLATFORM), msm8960)
 	LOCAL_CFLAGS += -DUSE_GENLOCK
 endif
+ifneq ($(TARGET_BOARD_PLATFORM), msm8660)
+	LOCAL_CFLAGS += -DUSE_GENLOCK
+endif
 LOCAL_ADDITIONAL_DEPENDENCIES := $(common_deps)
 LOCAL_SRC_FILES               := genlock.cpp
 include $(BUILD_SHARED_LIBRARY)

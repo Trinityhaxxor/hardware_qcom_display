@@ -27,6 +27,10 @@ ifeq ($(TARGET_BOARD_PLATFORM), msm8960)
     common_flags += -DUSE_FENCE_SYNC
 endif
 
+ifeq ($(TARGET_BOARD_PLATFORM), msm8660)
+    common_flags += -DUSE_FENCE_SYNC
+endif
+
 ifeq ($(ARCH_ARM_HAVE_NEON),true)
     common_flags += -D__ARM_HAVE_NEON
 endif
@@ -35,7 +39,7 @@ common_deps  :=
 kernel_includes :=
 
 #Kernel includes. Not being executed on JB+
-ifeq ($(call is-vendor-board-platform,QCOM),true)
+ifeq ($(TARGET_BOARD_PLATFORM), msm8660)
     common_deps += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
     kernel_includes += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
 endif
