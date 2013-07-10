@@ -171,8 +171,6 @@ int MDPComp::prepare(hwc_context_t *ctx, hwc_layer_1_t *layer,
             zOrder = ovutils::ZORDER_1;
         } else if(mdp_info.zOrder == 2 ) {
             zOrder = ovutils::ZORDER_2;
-        } else if(mdp_info.zOrder == 3) {
-            zOrder = ovutils::ZORDER_3;
         }
 
         // Order order order
@@ -295,6 +293,13 @@ bool MDPComp::isDoable(hwc_context_t *ctx, hwc_display_contents_1_t* list) {
             ALOGD_IF(isDebug(), "%s: orientation involved",__FUNCTION__);
             return false;
         }
+	// PL: Hack: don't use composition with video, it seems broken
+	// When a landscape video is displayed in portrait,
+	// an opaque layer comes above it ?
+	// Note: It's also disabled in Sony firmware
+	if(isYuvBuffer(hnd)) {
+	  return false;
+	}
     }
     return true;
 }
@@ -553,10 +558,13 @@ bool MDPComp::init(hwc_context_t *ctx) {
         return false;
     }
 
+    // PL: Nozomi doesn't have borderfill pipe, disable it
+#if 0
     if(!setupBasePipe(ctx)) {
         ALOGE("%s: Failed to setup primary base pipe", __FUNCTION__);
         return false;
     }
+#endif
 
     char property[PROPERTY_VALUE_MAX];
 

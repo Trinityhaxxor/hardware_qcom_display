@@ -317,11 +317,8 @@ enum eMdpPipeType {
  */
 enum eDest {
     OV_VG0 = 0,
-    OV_RGB0,
     OV_VG1,
     OV_RGB1,
-    OV_VG2,
-    OV_RGB2,
     OV_INVALID,
 };
 
@@ -390,7 +387,7 @@ inline void clearMdpFlags(eMdpFlags& f, eMdpFlags v) {
 }
 
 // fb 0/1/2
-enum { FB0, FB1, FB2 };
+enum { FB0, FB1 };
 
 //Panels could be categorized as primary and external
 enum { PRIMARY, EXTERNAL };
@@ -735,11 +732,8 @@ inline void even_floor(T& value) {
 inline const char* getDestStr(eDest dest) {
     switch(dest) {
         case OV_VG0: return "VG0";
-        case OV_RGB0: return "RGB0";
         case OV_VG1: return "VG1";
         case OV_RGB1: return "RGB1";
-        case OV_VG2: return "VG2";
-        case OV_RGB2: return "RGB2";
         default: return "Invalid";
     }
     return "Invalid";
@@ -749,11 +743,8 @@ inline eMdpPipeType getPipeType(eDest dest) {
     switch(dest) {
         case OV_VG0:
         case OV_VG1:
-        case OV_VG2:
             return OV_MDP_PIPE_VG;
-        case OV_RGB0:
         case OV_RGB1:
-        case OV_RGB2:
             return OV_MDP_PIPE_RGB;
         default:
             return OV_MDP_PIPE_ANY;
